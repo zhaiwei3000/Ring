@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+	
+	<!-- <property name="LOG_DIR" value="${app.logDir:-/app/logs/com.gome.pangu_prepaid-card/${app.server.port}}" /> -->
+	<property name="LOG_DIR" value="${catalina.home}/logs/" />
+	<property name="APP_LOGLEVEL" value="INFO" />
+	
+	<conversionRule conversionWord="L" converterClass="com.gome.framework.logging.slf4j.LineOfCallerConverter" />
+	<conversionRule conversionWord="line" converterClass="com.gome.framework.logging.slf4j.LineOfCallerConverter" />
+	<conversionRule conversionWord="F" converterClass="com.gome.framework.logging.slf4j.FileOfCallerConverter" />
+	<conversionRule conversionWord="file" converterClass="com.gome.framework.logging.slf4j.FileOfCallerConverter" />
+	<conversionRule conversionWord="M" converterClass="com.gome.framework.logging.slf4j.MethodOfCallerConverter" />
+	<conversionRule conversionWord="method" converterClass="com.gome.framework.logging.slf4j.MethodOfCallerConverter" />
+	
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50}.%M\(%file:%line\) - %msg%n</pattern>
+			<charset class="java.nio.charset.Charset">UTF-8</charset>
+		</encoder>
+	</appender>
+	<appender name="appAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/app.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/otherlogs/app-%d{yyyyMMdd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50}.%M\(%file:%line\) - %msg%n</pattern>
+			<charset class="java.nio.charset.Charset">UTF-8</charset>
+		</encoder>
+	</appender>
+
+	
+
+	
+
+
+	<appender name="callHistoryAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_DIR}/history/callhistory.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_DIR}/history/callhistory.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="callTimeAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_DIR}/calltime/calltime.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_DIR}/calltime/calltime.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</Pattern>
+		</layout>
+	</appender>
+
+
+
+
+
+    <!-- 全部错误信息 -->
+    <logger name="allerrors" additivity="false">
+        <level value="ERROR" />
+        <appender-ref ref="allErrorsAppender" />
+    </logger>
+    <!-- 接口调用历史记录 -->
+    <logger name="callhistory" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="callHistoryAppender" />
+    </logger>
+    <!-- 接口执行时间监控 -->
+    <logger name="calltime" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="callTimeAppender" />
+    </logger>
+
+
+    <logger name="com.pp" level="DEBUG"/>
+    <logger name="java.sql" level="DEBUG"/>
+
+	<root level="INFO">
+		<appender-ref ref="appAppender" />
+		<appender-ref ref="consoleAppender" />
+	</root>
+
+
+
+	
+	
+</configuration>

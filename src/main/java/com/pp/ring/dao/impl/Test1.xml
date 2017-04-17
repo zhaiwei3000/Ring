@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.ring.dao.Test1Dao">
+
+
+  <resultMap id="Test1Map" type="com.pp.ring.model.Test1" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="msg" property="msg" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+  	</resultMap>
+
+	<sql id="select-all-column">
+	SELECT
+		id AS id,
+		msg AS msg,
+		name AS name,
+		datetime AS datetime	
+	FROM test1
+	</sql>
+	
+	<sql id="where-all-condition">
+	   <where>
+       <if test="id != null" >
+           AND id = #{id,jdbcType=VARCHAR}
+       </if>
+       <if test="msg != null" >
+           AND msg = #{msg,jdbcType=VARCHAR}
+       </if>
+       <if test="name != null" >
+           AND name = #{name,jdbcType=VARCHAR}
+       </if>
+	   <if test="datetime != null" >
+           AND datetime = #{datetime,jdbcType=TIMESTAMP} 
+       </if>
+       <if test="datetimeStart != null" >
+           <![CDATA[ AND datetime >= #{datetimeStart,jdbcType=TIMESTAMP} ]]>
+       </if>
+       <if test="datetimeEnd != null" >
+           <![CDATA[ AND datetime <= #{datetimeEnd,jdbcType=TIMESTAMP} ]]>
+       </if>
+	 </where>
+	</sql>
+	
+	
+
+	<select id="selectTest1" parameterType="com.pp.ring.model.Test1" resultType="com.pp.ring.model.Test1">
+		<include refid="select-all-column"/>
+		<include refid="where-all-condition"/>
+	</select>
+	
+	<!--<select id="listPagination"  resultType="com.pp.ring.model.Test1">
+		<include refid="select-all-column"/>
+	  <where>
+       <if test="params.id != null" >
+           AND id = #{params.id,jdbcType=VARCHAR}
+       </if>
+       <if test="params.msg != null" >
+           AND msg = #{params.msg,jdbcType=VARCHAR}
+       </if>
+       <if test="params.name != null" >
+           AND name = #{params.name,jdbcType=VARCHAR}
+       </if>
+       <if test="params.datetime != null" >
+           AND datetime = #{params.bdatetime,jdbcType=TIMESTAMP} 
+       </if>
+        <if test="params.datetimeStart != null" >
+           <![CDATA[ AND datetime >= #{params.datetimeStart,jdbcType=TIMESTAMP} ]]>
+       </if>
+       <if test="params.datetimeEnd != null" >
+           <![CDATA[ AND datetime <= #{params.datetimeEnd,jdbcType=TIMESTAMP} ]]>
+       </if>
+	 </where>
+	</select>-->
+	
+	
+	
+	<insert id="insertTest1" parameterType="com.pp.ring.model.Test1">
+	INSERT INTO test1 (
+		id,
+		msg,
+		name,
+		datetime
+	) VALUES (
+		#{id,jdbcType=VARCHAR} ,
+		#{msg,jdbcType=VARCHAR} ,
+		#{name,jdbcType=VARCHAR} ,
+		#{datetime,jdbcType=TIMESTAMP}     
+	)
+	</insert>
+	
+	<update id="updateTest1" parameterType="java.util.Map">
+	UPDATE test1
+	<set>
+       <if test="_id != null" >
+            id = #{_id,jdbcType=VARCHAR},
+       </if>
+       <if test="_msg != null" >
+            msg = #{_msg,jdbcType=VARCHAR},
+       </if>
+       <if test="_name != null" >
+            name = #{_name,jdbcType=VARCHAR},
+       </if>
+       <if test="_datetime != null" >
+            datetime = #{_datetime,jdbcType=TIMESTAMP},
+       </if>
+	</set>
+	<include refid="where-all-condition"/>
+	</update>
+	
+	
+	
+	
+	
+	
+
+	<delete id="deleteTest1" parameterType="com.pp.ring.model.Test1">
+	DELETE FROM test1
+	<include refid="where-all-condition"/>
+	</delete>
+	
+	
+</mapper>
