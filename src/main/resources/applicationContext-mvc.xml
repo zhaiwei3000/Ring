@@ -35,12 +35,15 @@
     <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="configLocation" value="classpath:velocity.properties" />
        <!-- <property name="resourceLoaderPath" value="/WEB-INF/views/" />-->
+       <!--  <property name="resourceLoaderPath" value="/WEB-INF/templates/" />-->
+        <property name="resourceLoaderPath" value="/page/" />
     </bean>
 
-   <!-- <bean class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-        &lt;!&ndash;<property name="viewClass" value="com.gome.framework.web.VelocityLayoutView" />&ndash;&gt;
-        <property name="toolboxConfigLocation" value="classpath:velocity-tools.xml" />
-        <property name="prefix" value="/page/" />
+    <bean class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <!--<property name="viewClass" value="com.gome.framework.web.VelocityLayoutView" />-->
+       <!-- <property name="toolboxConfigLocation" value="classpath:velocity-tools.xml" />  识别不了，要放在WEB-INF下-->
+         <property name="toolboxConfigLocation" value="/WEB-INF/velocity-tools.xml" />
+        <!--<property name="prefix" value="/" />-->
         <property name="suffix" value=".vm" />
         <property name="layoutUrl" value="common/layout/default.vm" />
         <property name="layoutKey" value="layout" />
@@ -48,25 +51,24 @@
         <property name="contentType" value="text/html;charset=UTF-8" />
 
         <property name="allowRequestOverride" value="true" />
-        <property name="exposeRequestAttributes" value="true" /> &lt;!&ndash;是否开放request属性&ndash;&gt;
-        <property name="exposeSessionAttributes" value="true" /> &lt;!&ndash;是否开放session属性&ndash;&gt;
-        <property name="requestContextAttribute" value="request"/> &lt;!&ndash;request属性引用名称&ndash;&gt;
-    </bean>-->
-
-
-
-    <bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-        <!--<property name="viewClass" value="com.gome.framework.web.VelocityLayoutView" />-->
-        <property name="toolboxConfigLocation" value="classpath:velocity-tools.xml" />
-        <property name="prefix" value="/page/" />
-        <property name="suffix" value=".vm" />
-        <property name="contentType" value="text/html;charset=UTF-8" />
-
-        <property name="allowRequestOverride" value="true" />
         <property name="exposeRequestAttributes" value="true" /> <!--是否开放request属性-->
         <property name="exposeSessionAttributes" value="true" /> <!--是否开放session属性-->
         <property name="requestContextAttribute" value="request"/> <!--request属性引用名称-->
     </bean>
+
+
+  <!--  <bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        &lt;!&ndash;<property name="viewClass" value="com.gome.framework.web.VelocityLayoutView" />&ndash;&gt;
+        <property name="toolboxConfigLocation" value="classpath:velocity-tools.xml" />
+        &lt;!&ndash;<property name="prefix" value="page/" />&ndash;&gt;&lt;!&ndash;resourceLoaderPath已设置，这个prefix就不用设置了&ndash;&gt;
+        <property name="suffix" value=".vm" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
+
+        <property name="allowRequestOverride" value="true" />
+        <property name="exposeRequestAttributes" value="true" /> &lt;!&ndash;是否开放request属性&ndash;&gt;
+        <property name="exposeSessionAttributes" value="true" /> &lt;!&ndash;是否开放session属性&ndash;&gt;
+        <property name="requestContextAttribute" value="request"/> &lt;!&ndash;request属性引用名称&ndash;&gt;
+    </bean>-->
 
 
    <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -27,19 +26,32 @@ public class Controller {
     public String test1(HttpServletRequest request, HttpServletResponse response){
         Test1 test1 = new Test1();
         List<Test1> list = test1Dao.selectTest1(test1);
-
         Gson gson = new GsonBuilder() .setDateFormat("yyyy-MM-dd HH:mm:ss") .create();
         System.out.println(gson.toJson(list));
+        writeResult(response,list);
+        return null;
+    }
+
+
+
+    @RequestMapping(value = "/testVm.do" ,method = {RequestMethod.POST,RequestMethod.GET})
+    public String testVm(HttpServletRequest request, HttpServletResponse response){
+
+
+        return "test";
+    }
+
+
+
+    public void writeResult(HttpServletResponse response,Object result){
 
         PrintWriter pw = null;
         try {
+            response.setContentType("text/html;charset=UTF-8");
             pw = response.getWriter();
-
-            pw.write(gson.toJson(list));
-
-
-
-        } catch (IOException e) {
+            Gson gson = new GsonBuilder() .setDateFormat("yyyy-MM-dd HH:mm:ss") .create();
+            pw.write(gson.toJson(result));
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
             if(pw != null){
@@ -47,9 +59,13 @@ public class Controller {
                 pw.close();
             }
         }
-
-        return null;
     }
+
+
+
+
+
+
 
     public Test1Dao getTest1Dao() {
         return test1Dao;

@@ -24,11 +24,11 @@
           <version>4.0.1</version>
       </dependency>
       <!--json依赖包 -->
-      <dependency>
+     <!-- <dependency>
           <groupId>net.sf.json-lib</groupId>
           <artifactId>json-lib-ext-spring</artifactId>
           <version>1.0.2</version>
-      </dependency>
+      </dependency>-->
 
       <!--1.志相关依赖 -->
       <!--slf4j规范接口 -->
@@ -97,6 +97,7 @@
           <groupId>javax.servlet</groupId>
           <artifactId>javax.servlet-api</artifactId>
           <version>3.1.0</version>
+          <scope>provided</scope>
       </dependency>
       <!--4. spring依赖-->
       <!--1)spring核心依赖-->
